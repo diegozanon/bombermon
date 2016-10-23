@@ -16,6 +16,10 @@ provider:
     - Effect: "Allow"
       Action:
         - "iot:DescribeEndpoint"
+      Resource: "*"    
+    - Effect: "Allow"
+      Action:
+        - "sts:AssumeRole"
       Resource: "*"      
 
 functions:

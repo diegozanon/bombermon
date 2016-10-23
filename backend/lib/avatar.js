@@ -21,7 +21,7 @@ module.exports.setAvatar = (callback) => {
       availables.push(Number(item.Attributes[0].Value));
     });
 
-    let index = getRandomInt(0, availables.length - 1);
+    let index = utils.getRandomInt(0, availables.length - 1);
     const avatarId = availables[index];
 
     // set avatar as not available and return id
@@ -105,11 +105,4 @@ const putData = (id, callback) => {
   };
 
   simpledb.putAttributes(params, callback);
-};
-
-// Get random Int
-const getRandomInt = (min, max) => {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min + 1)) + min;
 };
