@@ -1,0 +1,21 @@
+service: serverless-multiplayer-game
+
+provider:
+  name: aws
+  runtime: nodejs4.3
+  stage: dev
+  region: us-east-1
+  memorySize: 128
+  timeout: 30
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action:
+        - "sdb:*"
+      Resource: "arn:aws:sdb:${self:provider.region}:*:domain/bombermon"
+
+functions:
+  game:
+    handler: handler.game
+    events:
+      - http: POST avatars/available
+      - http: PUT avatars/available
