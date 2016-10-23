@@ -1,0 +1,23 @@
+{
+  "name": "serverless-multiplayer-game-initializer",
+  "version": "1.0.0",
+  "description": "Initialize the SimpleDB database",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zanon-io/serverless-multiplayer-game.git"
+  },
+  "keywords": [
+    "Serverless",
+    "Serverless Framework",
+    "Multiplayer Game"
+  ],
+  "author": "Diego Zanon",
+  "license": "MIT",
+  "dependencies": {
+    "aws-sdk": "^2.6.11"
+  }
+}
