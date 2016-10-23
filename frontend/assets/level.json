@@ -1,0 +1,18 @@
+{
+    "assets": {
+        "map_tiles": {"type": "image", "source": "assets/maptiles.png", "frame_width": 16, "frame_height": 16},
+        "player_spritesheet": {"type": "spritesheet", "source": "assets/player_spritesheet.png", "frame_width": 24, "frame_height": 24},
+        "bomb_spritesheet": {"type": "spritesheet", "source": "assets/bomb_spritesheet.png", "frame_width": 16, "frame_height": 16},
+        "explosion_image": {"type": "image", "source": "assets/explosion.png"},
+        "level_tilemap": {"type": "tilemap", "source": "assets/level_map.json"}
+    },
+    "groups": [
+        "explosions",
+        "bombs",
+        "players"
+    ],
+    "map": {
+        "key": "level_tilemap",
+        "tilesets": ["map_tiles"]
+    }
+}

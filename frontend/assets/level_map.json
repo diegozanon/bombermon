@@ -1,0 +1,225 @@
+{ 
+    "height": 15,
+    "width": 15,
+    "tileheight": 16,
+    "tilewidth": 16,
+    "version": 1,
+    "orientation": "orthogonal",
+    "properties": {},
+    "tilesets": [{
+        "firstgid": 1,
+        "image": "..\/assets\/maptiles.png",
+        "imageheight": 64,
+        "imagewidth": 144,
+        "margin": 0,
+        "name": "maptiles",
+        "properties": {},
+        "spacing": 0,
+        "tileheight": 16,
+        "tilewidth": 16
+    }],
+    "layers": [{
+        "data": [
+            11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11,
+            11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11,
+            11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11,
+            11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11,
+            11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11,
+            11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11,
+            11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11,
+            11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11,
+            11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11,
+            11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11,
+            11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11,
+            11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11,
+            11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11,
+            11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11,
+            11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11
+        ],
+        "height": 15,
+        "width": 15,
+        "name": "background",
+        "opacity": 1,
+        "type": "tilelayer",
+        "visible": true,
+        "x": 0,
+        "y": 0
+    }, {
+        "data": [
+            1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3,
+            10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 12,
+            10, 0, 31, 0, 29, 0, 31, 0, 31, 0, 28, 0, 28, 0, 12,
+            10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 12,
+            10, 0, 30, 0, 18, 0, 30, 0, 30, 0, 7, 0, 31, 0, 12,
+            10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 12,
+            10, 0, 25, 0, 28, 0, 17, 0, 31, 0, 17, 0, 7, 0, 12,
+            10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 12,
+            10, 0, 31, 0, 28, 0, 18, 0, 25, 0, 31, 0, 7, 0, 12,
+            10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 12,
+            10, 0, 30, 0, 31, 0, 28, 0, 17, 0, 30, 0, 31, 0, 12,
+            10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 12,
+            10, 0, 18, 0, 7, 0, 25, 0, 31, 0, 7, 0, 29, 0, 12,
+            10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 12,
+            19, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 21
+        ],
+        "height": 15,
+        "width": 15,
+        "name": "collision",
+        "opacity": 1,
+        "properties": {
+            "collision":"true"
+        },
+        "type": "tilelayer",
+        "visible": true,
+        "x": 0,
+        "y": 0
+    }, {        
+        "data": [
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 8, 0, 0, 0, 8, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 9, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 8, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+        ],
+        "height": 15,
+        "width": 15,
+        "name": "thirdlayer",
+        "opacity": 1,
+        "type": "tilelayer",
+        "visible": true,
+        "x": 0,
+        "y": 0        
+    }, {
+        "height": 15,
+        "width": 15,
+        "name": "objects",
+        "opacity": 1,
+        "type": "objectgroup",
+        "visible": true,
+        "x": 0,
+        "y": 0,
+        "objects": [{
+            "gid": 1,
+            "height": 0,
+            "width": 0,
+            "name": "1",            
+            "properties": {
+                "group": "players",
+                "texture": "player_spritesheet",
+                "walking_speed": "50"
+            },
+            "type": "player",
+            "visible": false,
+            "x": 18,
+            "y": 28
+        }, {
+            "gid": 1,
+            "height": 0,
+            "width": 0,
+            "name": "2",            
+            "properties": {
+                "group": "players",
+                "texture": "player_spritesheet",
+                "walking_speed": "50"
+            },
+            "type": "player",
+            "visible": false,
+            "x": 18,
+            "y": 28
+        }, {
+            "gid": 1,
+            "height": 0,
+            "width": 0,
+            "name": "3",            
+            "properties": {
+                "group": "players",
+                "texture": "player_spritesheet",
+                "walking_speed": "50"
+            },
+            "type": "player",
+            "visible": false,
+            "x": 18,
+            "y": 28
+        }, {
+            "gid": 1,
+            "height": 0,
+            "width": 0,
+            "name": "4",            
+            "properties": {
+                "group": "players",
+                "texture": "player_spritesheet",
+                "walking_speed": "50"
+            },
+            "type": "player",
+            "visible": false,
+            "x": 18,
+            "y": 28
+        }, {
+            "gid": 1,
+            "height": 0,
+            "width": 0,
+            "name": "5",            
+            "properties": {
+                "group": "players",
+                "texture": "player_spritesheet",
+                "walking_speed": "50"
+            },
+            "type": "player",
+            "visible": false,
+            "x": 18,
+            "y": 28
+        }, {
+            "gid": 1,
+            "height": 0,
+            "width": 0,
+            "name": "6",            
+            "properties": {
+                "group": "players",
+                "texture": "player_spritesheet",
+                "walking_speed": "50"
+            },
+            "type": "player",
+            "visible": false,
+            "x": 18,
+            "y": 28
+        }, {
+            "gid": 1,
+            "height": 0,
+            "width": 0,
+            "name": "7",            
+            "properties": {
+                "group": "players",
+                "texture": "player_spritesheet",
+                "walking_speed": "50"
+            },
+            "type": "player",
+            "visible": false,
+            "x": 18,
+            "y": 28
+        }, {
+            "gid": 1,
+            "height": 0,
+            "width": 0,
+            "name": "8",            
+            "properties": {
+                "group": "players",
+                "texture": "player_spritesheet",
+                "walking_speed": "50"
+            },
+            "type": "player",
+            "visible": false,
+            "x": 18,
+            "y": 28
+        }]
+    }]
+}
