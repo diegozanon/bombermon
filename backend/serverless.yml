@@ -10,12 +10,18 @@ provider:
   iamRoleStatements:
     - Effect: "Allow"
       Action:
-        - "sdb:*"
+        - "sdb:PutAttributes"
+        - "sdb:Select"
       Resource: "arn:aws:sdb:${self:provider.region}:*:domain/bombermon"
+    - Effect: "Allow"
+      Action:
+        - "iot:DescribeEndpoint"
+      Resource: "*"      
 
 functions:
   game:
     handler: handler.game
     events:
+      - http: GET iot/keys
       - http: POST avatars/available
       - http: PUT avatars/available
