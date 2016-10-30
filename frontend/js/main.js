@@ -6,34 +6,6 @@ game.state.add("LoadingState", new Bombermon.LoadingState());
 game.state.add("TiledState", new Bombermon.TiledState());
 game.state.start("BootState", true, false, "assets/level.json", "TiledState");
 
-Bombermon.died_sent = false;
-Bombermon.died = function() {
-  if (!Bombermon.died_sent) {
-    Bombermon.died_sent = true;
-    $.ajax({
-      url: "https://beo6tmdkj5.execute-api.us-east-1.amazonaws.com/dev/end/" + Bombermon.my_player_id,
-      success: function(res) {
-      }
-    });
-
-    Bombermon.sendMessage({ x: 0, y: 0, visible: false, facing: 0 });
-  }
-}
-
-// hidden command
-Bombermon.reset_sent = false;
-Bombermon.reset = function() {
-  if (!Bombermon.reset_sent) {
-    Bombermon.reset_sent = true;
-    $.ajax({
-      url: "https://beo6tmdkj5.execute-api.us-east-1.amazonaws.com/dev/restart",
-      success: function(res) {
-        console.log('reset');
-      }
-    });
-  }
-}
-
 // IoT
 Bombermon.sendMessage = function(message) {
   var msgObj = {
@@ -57,15 +29,35 @@ Bombermon.handleReceivedMessage = function(message) {
 IoT.handleReceivedMessage = Bombermon.handleReceivedMessage;
 IoT.handleConnect = handleConnect();
 
-// TODO: pass IoT keys here
-IoT.connect('', '', '');
+// connect
+(function connect() {
+  var start_time = new Date().getTime();
+  $.ajax({
+    method: 'GET',
+    url: 'https://z50m189rv0.execute-api.us-east-1.amazonaws.com/dev/iot/keys',
+    success: function(res) {
+      var connect_start_time = new Date().getTime();
+      var request_time = new Date().getTime() - start_time;
+      console.log('Time to load keys (in milliseconds): ' + request_time);
+
+      IoT.connect(res.iotEndpoint, res.awsAccessKey, res.awsSecretAccessKet);
+
+      var connect_time = new Date().getTime() - connect_start_time;
+      console.log('Time to connect (in milliseconds): ' + connect_time);
+    }
+  });
+})();
 
 function handleConnect() {
   // start game
+  var start_time = new Date().getTime();
   $.ajax({
-    url: "https://beo6tmdkj5.execute-api.us-east-1.amazonaws.com/dev/start",
+    method: 'POST',
+    url: 'https://z50m189rv0.execute-api.us-east-1.amazonaws.com/dev/avatars/available',
     success: function(res) {
-      Bombermon.my_player_id = res.value;
+      Bombermon.my_player_id = res.avatarId;
+      var request_time = new Date().getTime() - start_time;
+      console.log('Time to load avatar (in milliseconds): ' + request_time);
     }
   });
 }
@@ -82,4 +74,24 @@ function getPlayersEmptyArray() {
   });
 
   return players;
+}
+
+// end
+Bombermon.died_sent = false;
+Bombermon.died = function() {
+  if (!Bombermon.died_sent) {
+    Bombermon.died_sent = true;
+    var start_time = new Date().getTime();
+    $.ajax({
+      method: 'PUT',
+      data: { id: Bombermon.my_player_id },
+      url: 'https://z50m189rv0.execute-api.us-east-1.amazonaws.com/dev/avatars/available',
+      success: function(res) {
+        var request_time = new Date().getTime() - start_time;
+        console.log('Time to release avatar (in milliseconds): ' + request_time);
+      }
+    });
+
+    Bombermon.sendMessage({ x: 0, y: 0, visible: false, facing: 0 });
+  }
 }

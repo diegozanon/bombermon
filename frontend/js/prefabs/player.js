@@ -41,11 +41,6 @@ Bombermon.Player.prototype.update = function () {
     this.game_state.game.physics.arcade.collide(this, this.game_state.groups.bombs);
     this.game_state.game.physics.arcade.overlap(this, this.game_state.groups.explosions, this.kill, null, this);
 
-    // reset game => hidden command
-    if (this.game_state.input.keyboard.isDown(Phaser.Keyboard.ZERO)) {
-        Bombermon.reset();
-    }
-
     if (Bombermon.my_player_id === this.player_id) {
         // start
         if (!this.visible && this.alive) {
