@@ -1,6 +1,8 @@
 ﻿var path = require('path');
+var webpack = require('webpack');
+
 module.exports = {
-    entry: './iot.js',
+    entry: './index.js',
     output: {
         path: __dirname,
         filename: 'bundle.js'
@@ -15,5 +17,12 @@ module.exports = {
                 }
             }
         ]
-    }
+    },
+    plugins: [
+        new webpack.optimize.UglifyJsPlugin({
+            compressor: {
+                warnings: false,
+            }
+        })
+    ]
 };
