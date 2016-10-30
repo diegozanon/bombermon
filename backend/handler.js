@@ -7,14 +7,14 @@ const utils = require('./lib/utils');
 module.exports.game = (event, context, callback) => {
 
   try {
-    switch(event.httpMethod) {
-      case 'GET':        
+    switch(event.httpMethod + ' ' + event.resource) {
+      case 'GET /iot/keys':        
         iot.getIoTKeys(callback);
         break;
-      case 'POST':        
+      case 'POST /avatars/available':        
         avatar.setAvatar(callback);
         break;
-      case 'PUT':
+      case 'PUT /avatars/available':
         const id = JSON.parse(event.body).id;
         avatar.releaseAvatar(id, callback);
         break;

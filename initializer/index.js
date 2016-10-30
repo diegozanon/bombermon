@@ -1,5 +1,6 @@
 const AWS = require('aws-sdk');
 const simpledb = new AWS.SimpleDB();
+const iam = new AWS.IAM();
 
 const domainName = 'bombermon';
 const numberOfPlayers = 8;
@@ -37,14 +38,60 @@ simpledb.createDomain({ DomainName: domainName }, function(err, data) {
     };
   });
 
-  var params = {
+  const sdbParams = {
     DomainName: domainName,
     Items: items
   };
   
   // insert data
-  simpledb.batchPutAttributes(params, function(err, data) {
+  simpledb.batchPutAttributes(sdbParams, function(err, data) {
     if (err) console.log(err, err.stack);
     else     console.log('Finished creating SimpleDB data');          
+  });
+});
+
+const roleName = 'bombermon-iot';
+
+const createRoleParams = {
+  AssumeRolePolicyDocument: `{
+    "Version":"2012-10-17",
+    "Statement":[{
+        "Effect": "Allow",
+        "Principal": {
+            "Service": "iot.amazonaws.com"
+        },
+        "Action": "sts:AssumeRole"
+      },
+      {
+        "Effect": "Allow",
+        "Principal": {
+          "AWS": "*"
+        },
+        "Action": "sts:AssumeRole"
+      }
+    ]
+  }`,
+  RoleName: roleName
+};
+
+iam.createRole(createRoleParams, function(err, data) {
+  if (err) return console.log(err, err.stack);
+
+  const attachPolicyParams = {
+    PolicyDocument: `{
+      "Version": "2012-10-17",
+      "Statement": [{
+        "Action": ["iot:Connect", "iot:Subscribe", "iot:Publish", "iot:Receive"],
+        "Resource": "*",
+        "Effect": "Allow"
+      }]
+    }`,
+    PolicyName: roleName,
+    RoleName: roleName
+  };
+
+  iam.putRolePolicy(attachPolicyParams, (err, data) => {
+    if (err) console.log(err, err.stack);
+    else     console.log(`Finished creating IoT Role: ${roleName}`);          
   });
 });
