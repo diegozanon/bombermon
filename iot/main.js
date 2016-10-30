@@ -1,20 +1,21 @@
 'use strict';
 
-import v4 from 'aws-signature-v4';
-import crypto from 'crypto';
-import MqttClient from './node_modules/mqtt/lib/client';
-import websocket from 'websocket-stream';
+const v4 = require('aws-signature-v4');
+const crypto = require('crypto');
+const MqttClient = require('./node_modules/mqtt/lib/client');
+const websocket = require('websocket-stream');
 
+const roleName = 'bombermon-iot';
 const MQTT_TOPIC = '/game/pubsub';
 
-let client;
-
-let IoT = {};
+var client;
+var IoT = {};
 window.IoT = IoT;
 
-IoT.connect = (iotEndpoint, awsAccessKey, awsSecretAccessKey) => {
-    client = new MqttClient(() => {
-        let url = v4.createPresignedURL(
+IoT.connect = function(iotEndpoint, awsAccessKey, awsSecretAccessKey, sessionToken) {
+
+    client = new MqttClient(function() {
+        var url = v4.createPresignedURL(
             'GET',
             iotEndpoint.toLowerCase(),
             '/mqtt',
@@ -24,33 +25,36 @@ IoT.connect = (iotEndpoint, awsAccessKey, awsSecretAccessKey) => {
                 'key': awsAccessKey,
                 'secret': awsSecretAccessKey,
                 'protocol': 'wss',
-                'expires': 15
+                'expires': 3600
             }
         );
+        
+        url += '&X-Amz-Security-Token=' + encodeURIComponent(sessionToken);
 
         return websocket(url, [ 'mqttv3.1' ]);
     });
 
-    client.on('connect', () => {
+    client.on('connect', function() {
         console.log('Successfully connected to AWS IoT');
         client.subscribe(MQTT_TOPIC);
         IoT.handleConnected();
     });
 
-    client.on('close', () => {
+    client.on('close', function(err) {
+        console.log(err);
         console.log('Failed to connect to AWS IoT');
         client.end();  // don't reconnect
         client = undefined;
     });
 
-    client.on('message', (topic, message) => {
+    client.on('message', function(topic, message) {
         IoT.handleReceivedMessage(message);
     });
 };
 
-IoT.handleConnected = () => {};
-IoT.handleReceivedMessage = () => {};
+IoT.handleConnected = function() {};
+IoT.handleReceivedMessage = function() {};
 
-IoT.send = (message) => {
+IoT.send = function(message) {
     client.publish(MQTT_TOPIC, message);
 };

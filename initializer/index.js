@@ -58,13 +58,6 @@ const createRoleParams = {
     "Statement":[{
         "Effect": "Allow",
         "Principal": {
-            "Service": "iot.amazonaws.com"
-        },
-        "Action": "sts:AssumeRole"
-      },
-      {
-        "Effect": "Allow",
-        "Principal": {
           "AWS": "*"
         },
         "Action": "sts:AssumeRole"

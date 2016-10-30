@@ -1,3 +1,6 @@
+// config
+var apiGateway = 'https://z50m189rv0.execute-api.us-east-1.amazonaws.com/dev/'; 
+
 var Bombermon = Bombermon || {};
 
 var game = new Phaser.Game(240, 240, Phaser.CANVAS);
@@ -34,13 +37,13 @@ IoT.handleConnect = handleConnect();
   var start_time = new Date().getTime();
   $.ajax({
     method: 'GET',
-    url: 'https://z50m189rv0.execute-api.us-east-1.amazonaws.com/dev/iot/keys',
+    url: apiGateway + 'iot/keys',
     success: function(res) {
       var connect_start_time = new Date().getTime();
       var request_time = new Date().getTime() - start_time;
       console.log('Time to load keys (in milliseconds): ' + request_time);
 
-      IoT.connect(res.iotEndpoint, res.awsAccessKey, res.awsSecretAccessKet);
+      IoT.connect(res.iotEndpoint, res.awsAccessKey, res.awsSecretAccessKey, res.sessionToken);
 
       var connect_time = new Date().getTime() - connect_start_time;
       console.log('Time to connect (in milliseconds): ' + connect_time);
@@ -53,7 +56,7 @@ function handleConnect() {
   var start_time = new Date().getTime();
   $.ajax({
     method: 'POST',
-    url: 'https://z50m189rv0.execute-api.us-east-1.amazonaws.com/dev/avatars/available',
+    url: apiGateway + 'avatars/available',
     success: function(res) {
       Bombermon.my_player_id = res.avatarId;
       var request_time = new Date().getTime() - start_time;
@@ -85,7 +88,7 @@ Bombermon.died = function() {
     $.ajax({
       method: 'PUT',
       data: { id: Bombermon.my_player_id },
-      url: 'https://z50m189rv0.execute-api.us-east-1.amazonaws.com/dev/avatars/available',
+      url: apiGateway + 'avatars/available',
       success: function(res) {
         var request_time = new Date().getTime() - start_time;
         console.log('Time to release avatar (in milliseconds): ' + request_time);

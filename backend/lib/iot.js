@@ -33,7 +33,8 @@ module.exports.getIoTKeys = (callback) => {
           body: JSON.stringify({
             iotEndpoint: iotEndpoint,
             awsAccessKey: data.Credentials.AccessKeyId,
-            awsSecretAccessKey: data.Credentials.SecretAccessKey
+            awsSecretAccessKey: data.Credentials.SecretAccessKey,
+            sessionToken: data.Credentials.SessionToken
           }) 
         });
       });
