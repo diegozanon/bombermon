@@ -5,7 +5,9 @@ This project was created to validate if it is possible to develop a multiplayer 
 
 Demo: [bombermon.zanon.io](http://bombermon.zanon.io)
 
-![game](https://github.com/zanon-io/serverless-multiplayer-game/blob/master/frontend/assets/game.png?raw=true)
+<p align="center">
+  <img src="https://github.com/zanon-io/serverless-multiplayer-game/blob/master/frontend/assets/game.png?raw=true" alt="game">
+</p>
 
 To create the multiplayer feature, I've used IoT notifications. You can read how [here](zanon.io/posts/serverless-notifications-on-aws).
 
