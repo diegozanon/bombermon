@@ -44,7 +44,7 @@ Bombermon.Player.prototype.update = function () {
         if (!this.visible && this.alive) {
             var pos = this.revive_positions[this.player_id - 1];
             this.reset(pos.x, pos.y);
-            Bombermon.sendMessage({ x: pos.x, y: pos.y, visible: true, facing: 0 });
+            Bombermon.sendMessage({ x: pos.x, y: pos.y, visible: true, frame: this.stopped_frames[0] });
         }
 
         if (!this.alive) {
@@ -109,15 +109,15 @@ Bombermon.Player.prototype.update = function () {
             }
         }
 
-        var myPlayerPos = { x: this.position.x, y: this.position.y, visible: true, facing: this.body.facing };
-        Bombermon.players[Bombermon.my_player_id - 1] = myPlayerPos;
+        var myPlayerPos = { x: this.position.x, y: this.position.y, visible: true, frame: this.animations.currentAnim.frame };        
 
         if (!Bombermon.started && Bombermon.my_player_id) {
             Bombermon.started = true;
+            myPlayerPos.frame = this.frame;
             Bombermon.sendMessage(myPlayerPos);
         }
         
-        var min_dist = 5;        
+        var min_dist = 3;        
         if ((Math.abs(this.previous_position.x - this.position.x) > min_dist || Math.abs(this.previous_position.y - this.position.y) > min_dist) && this.alive) {
             Bombermon.sendMessage(myPlayerPos);
             this.previous_position = { x: this.position.x, y: this.position.y };
@@ -127,7 +127,7 @@ Bombermon.Player.prototype.update = function () {
         this.visible = this.alive && p.visible;
         this.position.x = p.x;
         this.position.y = p.y;
-        this.frame = this.stopped_frames[p.facing];
+        this.frame = p.frame;
 
         if (p.bomb) {
             this.drop_bomb(false);
@@ -146,7 +146,7 @@ Bombermon.Player.prototype.drop_bomb = function (alert_others) {
         bomb = Bombermon.create_prefab_from_pool(this.game_state.groups.bombs, Bombermon.Bomb.prototype.constructor, this.game_state, bomb_name, bomb_position, bomb_properties);
 
         if (alert_others) {
-            Bombermon.sendMessage({ x: this.position.x, y: this.position.y, visible: true, facing: this.body.facing, bomb: true });
+            Bombermon.sendMessage({ x: this.position.x, y: this.position.y, visible: true, bomb: true, frame: this.animations.currentAnim.frame });
             Bombermon.current_bomb_index += 1;
         }
     }

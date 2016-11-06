@@ -8,7 +8,7 @@ game.state.start("BootState", true, false, "assets/level.json", "TiledState");
 
 var players = [];
 [1, 2, 3, 4, 5, 6, 7, 8].forEach(function(i) {
-    players.push({ x: 0, y: 0, visible: false, facing: 0 });
+    players.push({ x: 0, y: 0, visible: false, frame: 0 });
 });
 
 Bombermon.players = players;
@@ -31,7 +31,7 @@ Bombermon.sendMessage = function(message) {
 window.handleReceivedMessage = function(message) {
     const rcvMsg = JSON.parse(message.toString());
     if (rcvMsg.playerId !== Bombermon.my_player_id) {
-        Bombermon.players[rcvMsg.playerId - 1] = { x: rcvMsg.message.x, y: rcvMsg.message.y, visible: rcvMsg.message.visible, facing: rcvMsg.message.facing, bomb: rcvMsg.message.bomb };
+        Bombermon.players[rcvMsg.playerId - 1] = { x: rcvMsg.message.x, y: rcvMsg.message.y, visible: rcvMsg.message.visible, bomb: rcvMsg.message.bomb, frame: rcvMsg.message.frame };
     } else {
         console.log('Time to send+receive message (in milliseconds): ' + (new Date().getTime() - rcvMsg.message.timestamp))
     }
@@ -85,7 +85,7 @@ Bombermon.died = function() {
             }
         });
 
-        Bombermon.sendMessage({ x: 0, y: 0, visible: false, facing: 0 });
+        Bombermon.sendMessage({ x: 0, y: 0, visible: false, frame: 0 });
     }
 };
 
