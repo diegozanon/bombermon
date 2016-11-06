@@ -28,6 +28,18 @@ module.exports.errorHandler = (err, callback) => {
   });
 };
 
+// OPTIONS verb
+module.exports.optionsHandler = (callback) => {
+  callback(null, {
+    statusCode: 200,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Headers': 'origin, content-type, accept',
+      'Access-Control-Allow-Methods': 'POST, PUT, OPTIONS'
+    }
+  });
+};
+
 // Get random Int
 module.exports.getRandomInt = (min, max) => {
   min = Math.ceil(min);

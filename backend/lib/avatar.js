@@ -60,7 +60,13 @@ module.exports.releaseAvatar = (id, callback) => {
 
   simpledb.putAttributes(params, (err, data) => {
     if (err) return utils.errorHandler(err, callback);
-    else     return callback(null, { statusCode: 200, headers: utils.headers });
+    else     return callback(null, { 
+      statusCode: 200, 
+      headers: utils.headers, 
+      body: JSON.stringify({
+        avatarId: id
+      })
+    });
   });
 };
 

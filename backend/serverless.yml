@@ -29,3 +29,4 @@ functions:
       - http: GET iot/keys
       - http: POST avatars/available
       - http: PUT avatars/available
+      - http: OPTIONS avatars/available

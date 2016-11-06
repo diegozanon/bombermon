@@ -72,9 +72,11 @@ Bombermon.died = function() {
         Bombermon.died_sent = true;
         $.ajax({
             method: 'PUT',
-            data: { id: Bombermon.my_player_id },
+            data: JSON.stringify({ id: Bombermon.my_player_id }),
+            contentType: 'application/json',
             url: apiGateway + 'avatars/available',
             success: function(res) {
+                setTimeout(function() { window.location.reload(false); }, 2000);
             }
         });
 

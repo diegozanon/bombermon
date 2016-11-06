@@ -41,6 +41,8 @@ Bombermon.Bomb.prototype.kill  = function () {
     this.create_explosions(1, this.bomb_radius, +1, "x");
     this.create_explosions(-1, -this.bomb_radius, -1, "y");
     this.create_explosions(1, this.bomb_radius, +1, "y");
+
+    Bombermon.current_bomb_index -= 1;
 };
 
 Bombermon.Bomb.prototype.create_explosions = function (initial_index, final_index, step, axis) {

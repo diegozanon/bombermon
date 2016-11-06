@@ -18,6 +18,9 @@ module.exports.game = (event, context, callback) => {
         const id = JSON.parse(event.body).id;
         avatar.releaseAvatar(id, callback);
         break;
+      case 'OPTIONS /avatars/available':
+        utils.optionsHandler(callback);
+        break;
       default:
         utils.invalidHandler(callback);
     }

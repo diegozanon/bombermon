@@ -8,7 +8,6 @@ Bombermon.Player = function (game_state, name, position, properties) {
     
     this.walking_speed = +properties.walking_speed;
     this.bomb_duration = +properties.bomb_duration;
-    this.dropping_bomb = false;
 
     var nb_of_frames = 16;
     this.player_id = Number(this.name);
@@ -20,20 +19,18 @@ Bombermon.Player = function (game_state, name, position, properties) {
     this.animations.add("walking_up", [12 + k, 13 + k, 14 + k, 15 + k], 10, true);
     
     this.stopped_frames = [0 + k, 4 + k, 8 + k, 12 + k, 0 + k];
-
     this.revive_positions = [{ x: 26, y: 18 }, { x: 216, y: 18 }, { x: 26, y: 208 }, { x: 216, y: 208 }, { x: 88, y: 84 }, { x: 152, y: 84 }, { x: 88, y: 146 }, { x: 152, y: 146 }];
-
     this.game_state.game.physics.arcade.enable(this);
-    
     this.body.setSize(10, 10, 7, 14);
-
     this.cursors = this.game_state.game.input.keyboard.createCursorKeys();
-
     this.previous_position = { x: 0, y: 0 };
+    this.number_of_bombs = 5;
 };
 
 Bombermon.Player.prototype = Object.create(Bombermon.Prefab.prototype);
 Bombermon.Player.prototype.constructor = Bombermon.Player;
+
+Bombermon.current_bomb_index = 0;
 
 Bombermon.Player.prototype.update = function () {
     "use strict";
@@ -102,15 +99,15 @@ Bombermon.Player.prototype.update = function () {
             this.frame = this.stopped_frames[this.body.facing];
         }
         
-        if (!this.dropping_bomb && (this.game_state.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR) || touchCenter)) {
-            this.drop_bomb(true);
-            this.dropping_bomb = true;
+        if ((this.game_state.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR) || touchCenter) && Bombermon.current_bomb_index < this.number_of_bombs) {
+            var colliding_bombs = this.game_state.game.physics.arcade.getObjectsAtLocation(this.x, this.y, this.game_state.groups.bombs);
+            
+            // drop the bomb only if it does not collide with another one
+            if (colliding_bombs.length === 0) {
+                this.drop_bomb(true);
+            }
         }
         
-        if (this.dropping_bomb && (!this.game_state.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR) || !touchCenter)) {
-            this.dropping_bomb = false;
-        }
-
         var min_dist = 5;
         if ((Math.abs(this.previous_position.x - this.position.x) > min_dist || Math.abs(this.previous_position.y - this.position.y) > min_dist) && this.alive) {
             Bombermon.sendMessage({ x: this.position.x, y: this.position.y, visible: true, facing: this.body.facing });
@@ -141,6 +138,7 @@ Bombermon.Player.prototype.drop_bomb = function (alert_others) {
 
         if (alert_others) {
             Bombermon.sendMessage({ x: this.position.x, y: this.position.y, visible: true, facing: this.body.facing, bomb: true });
+            Bombermon.current_bomb_index += 1;
         }
     }
 };
