@@ -31,6 +31,7 @@ Bombermon.Player.prototype = Object.create(Bombermon.Prefab.prototype);
 Bombermon.Player.prototype.constructor = Bombermon.Player;
 
 Bombermon.current_bomb_index = 0;
+Bombermon.started = false;
 
 Bombermon.Player.prototype.update = function () {
     "use strict";
@@ -59,7 +60,7 @@ Bombermon.Player.prototype.update = function () {
 		var touchRight = touchActive && ((touchX / width) > 0.66);
 		var touchUp = touchActive && ((touchY / height) < 0.33);
 		var touchDown = touchActive && ((touchY / height) > 0.66);
-		var touchCenter = touchActive && (((touchX / width) >= 0.33) && ((touchX / width) <= 0.66) && ((touchY / height) >= 0.33) && ((touchY / height) <= 0.66));		
+		var touchCenter = touchActive && (((touchX / width) >= 0.33) && ((touchX / width) <= 0.66) && ((touchY / height) >= 0.33) && ((touchY / height) <= 0.66));
 			 
         if ((this.cursors.left.isDown && this.body.velocity.x <= 0) || touchLeft) {
             // move left
@@ -107,10 +108,18 @@ Bombermon.Player.prototype.update = function () {
                 this.drop_bomb(true);
             }
         }
+
+        var myPlayerPos = { x: this.position.x, y: this.position.y, visible: true, facing: this.body.facing };
+        Bombermon.players[Bombermon.my_player_id - 1] = myPlayerPos;
+
+        if (!Bombermon.started && Bombermon.my_player_id) {
+            Bombermon.started = true;
+            Bombermon.sendMessage(myPlayerPos);
+        }
         
-        var min_dist = 5;
+        var min_dist = 5;        
         if ((Math.abs(this.previous_position.x - this.position.x) > min_dist || Math.abs(this.previous_position.y - this.position.y) > min_dist) && this.alive) {
-            Bombermon.sendMessage({ x: this.position.x, y: this.position.y, visible: true, facing: this.body.facing });
+            Bombermon.sendMessage(myPlayerPos);
             this.previous_position = { x: this.position.x, y: this.position.y };
         }
     } else {

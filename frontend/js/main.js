@@ -18,7 +18,6 @@ var apiGateway = 'https://z50m189rv0.execute-api.us-east-1.amazonaws.com/dev/';
 
 // send message
 Bombermon.sendMessage = function(message) {
-
     message.timestamp = new Date().getTime();
     var msgObj = {
         playerId: Bombermon.my_player_id,
@@ -33,9 +32,9 @@ window.handleReceivedMessage = function(message) {
     const rcvMsg = JSON.parse(message.toString());
     if (rcvMsg.playerId !== Bombermon.my_player_id) {
         Bombermon.players[rcvMsg.playerId - 1] = { x: rcvMsg.message.x, y: rcvMsg.message.y, visible: rcvMsg.message.visible, facing: rcvMsg.message.facing, bomb: rcvMsg.message.bomb };
+    } else {
+        console.log('Time to send+receive message (in milliseconds): ' + (new Date().getTime() - rcvMsg.message.timestamp))
     }
-    
-    console.log('Time to receive message (in milliseconds): ' + (new Date().getTime() - rcvMsg.message.timestamp))
 };
 
 // connect
@@ -46,7 +45,6 @@ $.ajax({
     url: apiGateway + 'iot/keys',
     success: function(res) {
         console.log('Time to load keys (in milliseconds): ' + (new Date().getTime() - timestamp));
-
         IoT.connect(iotTopic, res.iotEndpoint, res.region, res.awsAccessKey, res.awsSecretAccessKey, res.sessionToken);
     }
 });
@@ -60,12 +58,10 @@ window.handleConnected = function() {
         data: JSON.stringify({ id: 0 }),
         url: apiGateway + 'avatars/available',
         success: function(res) {
-            
             console.log('Time to load avatar (in milliseconds): ' + (new Date().getTime() - timestamp));
-
-            if (res.avatarId > 0) {
-                Bombermon.my_player_id = res.avatarId;
-            } else {
+            Bombermon.my_player_id = res.avatarId;
+            
+            if (res.avatarId === 0) {
                 loadMaxPlayersMsg();
             }
         }
