@@ -14,7 +14,7 @@ module.exports.getIoTKeys = (callback) => {
 
     const iotEndpoint = data.endpointAddress;
  
-    // get account id which will be used to assume a role
+    // get the account id which will be used to assume a role
     sts.getCallerIdentity({}, (err, data) => {
       if (err) return utils.errorHandler(err, callback);
 
@@ -32,6 +32,7 @@ module.exports.getIoTKeys = (callback) => {
           headers: utils.headers, 
           body: JSON.stringify({
             iotEndpoint: iotEndpoint,
+            region: utils.getRegion(iotEndpoint),
             awsAccessKey: data.Credentials.AccessKeyId,
             awsSecretAccessKey: data.Credentials.SecretAccessKey,
             sessionToken: data.Credentials.SessionToken

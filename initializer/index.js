@@ -1,6 +1,7 @@
 const AWS = require('aws-sdk');
 const simpledb = new AWS.SimpleDB();
 const iam = new AWS.IAM();
+const sts = new AWS.STS();
 
 const domainName = 'bombermon';
 const numberOfPlayers = 8;
@@ -12,7 +13,7 @@ const attr = {
 };
 
 // create domain
-simpledb.createDomain({ DomainName: domainName }, function(err, data) {
+simpledb.createDomain({ DomainName: domainName }, (err, data) => {
   if (err) return console.log(err, err.stack);
 
   // [1, 2, ..., N]
@@ -44,7 +45,7 @@ simpledb.createDomain({ DomainName: domainName }, function(err, data) {
   };
   
   // insert data
-  simpledb.batchPutAttributes(sdbParams, function(err, data) {
+  simpledb.batchPutAttributes(sdbParams, (err, data) => {
     if (err) console.log(err, err.stack);
     else     console.log('Finished creating SimpleDB data');          
   });
@@ -52,39 +53,44 @@ simpledb.createDomain({ DomainName: domainName }, function(err, data) {
 
 const roleName = 'bombermon-iot';
 
-const createRoleParams = {
-  AssumeRolePolicyDocument: `{
-    "Version":"2012-10-17",
-    "Statement":[{
-        "Effect": "Allow",
-        "Principal": {
-          "AWS": "*"
-        },
-        "Action": "sts:AssumeRole"
-      }
-    ]
-  }`,
-  RoleName: roleName
-};
-
-iam.createRole(createRoleParams, function(err, data) {
+// get the account id
+sts.getCallerIdentity({}, (err, data) => {
   if (err) return console.log(err, err.stack);
 
-  const attachPolicyParams = {
-    PolicyDocument: `{
-      "Version": "2012-10-17",
-      "Statement": [{
-        "Action": ["iot:Connect", "iot:Subscribe", "iot:Publish", "iot:Receive"],
-        "Resource": "*",
-        "Effect": "Allow"
-      }]
+  const createRoleParams = {
+    AssumeRolePolicyDocument: `{
+      "Version":"2012-10-17",
+      "Statement":[{
+          "Effect": "Allow",
+          "Principal": {
+            "AWS": "arn:aws:iam::${data.Account}:root"
+          },
+          "Action": "sts:AssumeRole"
+        }
+      ]
     }`,
-    PolicyName: roleName,
     RoleName: roleName
   };
 
-  iam.putRolePolicy(attachPolicyParams, (err, data) => {
-    if (err) console.log(err, err.stack);
-    else     console.log(`Finished creating IoT Role: ${roleName}`);          
+  iam.createRole(createRoleParams, (err, data) => {
+    if (err) return console.log(err, err.stack);
+
+    const attachPolicyParams = {
+      PolicyDocument: `{
+        "Version": "2012-10-17",
+        "Statement": [{
+          "Action": ["iot:Connect", "iot:Subscribe", "iot:Publish", "iot:Receive"],
+          "Resource": "*",
+          "Effect": "Allow"
+        }]
+      }`,
+      PolicyName: roleName,
+      RoleName: roleName
+    };
+
+    iam.putRolePolicy(attachPolicyParams, (err, data) => {
+      if (err) console.log(err, err.stack);
+      else     console.log(`Finished creating IoT Role: ${roleName}`);          
+    });
   });
 });

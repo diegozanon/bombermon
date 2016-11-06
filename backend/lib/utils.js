@@ -34,3 +34,10 @@ module.exports.getRandomInt = (min, max) => {
   max = Math.floor(max);
   return Math.floor(Math.random() * (max - min + 1)) + min;
 };
+
+// Get region from iotEndpoint
+module.exports.getRegion = (iotEndpoint) => {
+  const partial = iotEndpoint.replace('.amazonaws.com', '');
+  const iotIndex = iotEndpoint.indexOf("iot"); 
+  return partial.substring(iotIndex + 4);
+};
