@@ -9,9 +9,11 @@ Demo: [bombermon.zanon.io](http://bombermon.zanon.io)
   <img src="https://github.com/zanon-io/serverless-multiplayer-game/blob/master/frontend/assets/game.png?raw=true" alt="game">
 </p>
 
-To create the multiplayer feature, I've used IoT notifications. You can read how [here](zanon.io/posts/serverless-notifications-on-aws).
+To create the multiplayer feature, I've used IoT notifications. You can read how it was done [here](zanon.io/posts/serverless-notifications-on-aws).
 
 The [Serverless Framework](serverless.com) was used to manage Lambda functions that handle the avatar selection and IoT keys.
+
+If you want to host this game in your AWS account, you need to execute the **index.jx** file that is inside the **initializer** folder to create the SimpleDB domain and the IoT role.
 
 ## Credits
 
