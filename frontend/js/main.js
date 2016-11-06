@@ -57,10 +57,17 @@ window.handleConnected = function() {
     var timestamp = new Date().getTime();  
     $.ajax({
         method: 'POST',
+        data: JSON.stringify({ id: 0 }),
         url: apiGateway + 'avatars/available',
         success: function(res) {
-            Bombermon.my_player_id = res.avatarId;
+            
             console.log('Time to load avatar (in milliseconds): ' + (new Date().getTime() - timestamp));
+
+            if (res.avatarId > 0) {
+                Bombermon.my_player_id = res.avatarId;
+            } else {
+                loadMaxPlayersMsg();
+            }
         }
     });
 };
@@ -70,12 +77,14 @@ Bombermon.died_sent = false;
 Bombermon.died = function() {
     if (!Bombermon.died_sent) {
         Bombermon.died_sent = true;
+        var timestamp = new Date().getTime();  
         $.ajax({
             method: 'PUT',
             data: JSON.stringify({ id: Bombermon.my_player_id }),
             contentType: 'application/json',
             url: apiGateway + 'avatars/available',
             success: function(res) {
+                console.log('Time to inform player death (in milliseconds): ' + (new Date().getTime() - timestamp));
                 setTimeout(function() { window.location.reload(false); }, 2000);
             }
         });
@@ -83,3 +92,32 @@ Bombermon.died = function() {
         Bombermon.sendMessage({ x: 0, y: 0, visible: false, facing: 0 });
     }
 };
+
+// keep alive - inform that this player is still in use
+setInterval(function() {
+    $.ajax({
+        method: 'POST',
+        data: JSON.stringify({ id: Bombermon.my_player_id }),
+        url: apiGateway + 'avatars/available'
+    });
+}, 60 * 1000); // 1 minute
+
+function loadMaxPlayersMsg() {
+
+    setTimeout(function() { // TODO: discover how to know when game has loaded
+        var overlay = game.add.graphics();
+        overlay.beginFill(0x000000, 0.5);
+        overlay.drawRect(0, 0, 240, 240);
+
+        var textBox = game.add.graphics();
+        textBox.beginFill(0x5d5d60, 0.8);
+        textBox.drawRect(0, 105, 240, 45);
+
+        var style = { font: "12px Arial", fill: "#fff", boundsAlignH: "center", boundsAlignV: "middle" };
+        var line1 = game.add.text(0, 0, 'Sorry, the maximum number of players', style);
+        line1.setTextBounds(0, 0, 240, 240);
+
+        var line2 = game.add.text(0, 0, 'have been reached', style);
+        line2.setTextBounds(0, 20, 240, 240);
+    }, 1000);
+}
