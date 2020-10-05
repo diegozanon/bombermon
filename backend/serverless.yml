@@ -2,8 +2,7 @@ service: serverless-multiplayer-game
 
 provider:
   name: aws
-  runtime: nodejs4.3
-  stage: dev
+  runtime: nodejs12.x
   region: us-east-1
   memorySize: 128
   timeout: 30

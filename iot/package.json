@@ -1,30 +1,30 @@
 {
-  "name": "serverless-multiplayer-game-notifications",
-  "version": "1.0.0",
-  "description": "Handle the multiplayer game messages",
-  "main": "main.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/zanon-io/serverless-multiplayer-game.git"
-  },
-  "keywords": [
-    "Serverless",
-    "Serverless Framework",
-    "Multiplayer Game"
-  ],
-  "author": "Diego Zanon",
-  "license": "MIT",
-  "dependencies": {
-    "aws-iot-device-sdk": "^1.0.13"
-  },
-  "devDependencies": {
-    "babel-preset-es2015": "^6.18.0",
-    "babelify": "^7.3.0",
-    "browserify": "^13.1.1",
-    "uglify-js": "^2.7.4",
-    "uglifyify": "^3.0.4"
-  }
+    "name": "serverless-multiplayer-game-notifications",
+    "version": "1.0.0",
+    "description": "Handle the multiplayer game messages",
+    "main": "main.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/diegozanon/serverless-multiplayer-game.git"
+    },
+    "keywords": [
+        "Serverless",
+        "Serverless Framework",
+        "Multiplayer Game"
+    ],
+    "author": "Diego Zanon",
+    "license": "MIT",
+    "dependencies": {
+        "aws-iot-device-sdk": "^1.0.13"
+    },
+    "devDependencies": {
+        "babel-preset-es2015": "^6.18.0",
+        "babelify": "^7.3.0",
+        "browserify": "^13.1.1",
+        "uglify-js": "^2.7.4",
+        "uglifyify": "^3.0.4"
+    }
 }

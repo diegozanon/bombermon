@@ -38,3 +38,6 @@ jspm_packages
 
 # Serverless
 .serverless
+
+# macOS
+.DS_Store
