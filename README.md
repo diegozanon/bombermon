@@ -1,4 +1,4 @@
-# Serverless Multiplayer Game
+# Bombermon  
 A multiplayer game (Bomberman-like) using Serverless concepts
 
 This project was created to validate if it is possible to develop a multiplayer game using only serverless services.
