@@ -8,7 +8,7 @@ You can try it using your desktop and your phone.
 Demo: [bombermon.zanon.dev](http://bombermon.zanon.dev)
 
 <p align="center">
-  <img src="https://github.com/diegozanon/serverless-multiplayer-game/blob/master/frontend/assets/game.png?raw=true" alt="game">
+  <img src="https://github.com/diegozanon/bombermon/blob/master/frontend/assets/game.png?raw=true" alt="game">
 </p>
 
 To create the multiplayer feature, I've used IoT notifications. You can read how it was done [here](https://web.archive.org/web/20200930220520/https://zanon.io/posts/serverless-notifications-on-aws).

@@ -1,5 +1,5 @@
 {
-    "name": "serverless-multiplayer-game-notifications",
+    "name": "bombermon-notifications",
     "version": "1.0.0",
     "description": "Handle the multiplayer game messages",
     "main": "main.js",
@@ -8,7 +8,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/diegozanon/serverless-multiplayer-game.git"
+        "url": "https://github.com/diegozanon/bombermon.git"
     },
     "keywords": [
         "Serverless",
