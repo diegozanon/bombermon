@@ -18,6 +18,6 @@
     "author": "Diego Zanon",
     "license": "MIT",
     "dependencies": {
-        "aws-sdk": "^2.6.11"
+        "aws-sdk": "^2.814.0"
     }
 }
